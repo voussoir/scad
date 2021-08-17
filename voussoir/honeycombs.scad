@@ -84,6 +84,8 @@ module interior_honeycomb(
     x_span,
     y_span,
     perimeter,
+    x_offset=0,
+    y_offset=0,
     rotate=0,
     center=false
 )
@@ -98,6 +100,7 @@ module interior_honeycomb(
         intersection()
         {
             rotate([0, 0, rotate])
+            translate([x_offset, y_offset])
             honeycomb_mesh(outer_radius, inner_radius, x_span, y_span, center=center);
             children();
         }
