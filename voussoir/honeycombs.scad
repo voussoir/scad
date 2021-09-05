@@ -11,7 +11,7 @@ module cookiecutter_inset(distance)
     }
 }
 
-module honeycomb_tiles(outer_radius, inner_radius, x_span, y_span, center=false)
+module honeycomb_tiles(outer_radius, inner_radius, x_span, y_span, center=false, fn=6)
 {
     /*
     Returns a tiling of 2D hexagons.
@@ -54,12 +54,12 @@ module honeycomb_tiles(outer_radius, inner_radius, x_span, y_span, center=false)
             alternate_offset = (j % 2) * outer_radius;
             translate([i * diameter + alternate_offset, (j * y_step) * diameter])
             rotate([0,0,30])
-            circle(inner_radius, $fn=6);
+            circle(inner_radius, $fn=fn);
         }
     }
 }
 
-module honeycomb_mesh(outer_radius, inner_radius, x_span, y_span, center=false)
+module honeycomb_mesh(outer_radius, inner_radius, x_span, y_span, center=false, fn=6)
 {
     /*
     Returns a 2D rectangle with hexagonal holes throughout.
@@ -73,7 +73,8 @@ module honeycomb_mesh(outer_radius, inner_radius, x_span, y_span, center=false)
             inner_radius,
             x_span+3*outer_radius,
             y_span+3*outer_radius,
-            center=center
+            center=center,
+            fn=fn
         );
     }
 }
@@ -87,7 +88,8 @@ module interior_honeycomb(
     x_offset=0,
     y_offset=0,
     rotate=0,
-    center=false
+    center=false,
+    fn=6
 )
 {
     /*
@@ -101,7 +103,7 @@ module interior_honeycomb(
         {
             rotate([0, 0, rotate])
             translate([x_offset, y_offset])
-            honeycomb_mesh(outer_radius, inner_radius, x_span, y_span, center=center);
+            honeycomb_mesh(outer_radius, inner_radius, x_span, y_span, center=center, fn=fn);
             children();
         }
     }
